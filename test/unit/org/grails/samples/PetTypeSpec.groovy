@@ -21,6 +21,8 @@ class PetTypeSpec extends Specification implements DomainDataFactory {
 		
 		then:
 		!petType.hasErrors()
+		and:
+		true
 	}
 	
 	@Unroll

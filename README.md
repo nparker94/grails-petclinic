@@ -6,21 +6,21 @@ It contains the application code and an ansible playbook which is used to deploy
 The application code was forked from https://github.com/secretescapes/grails-petclinic.
 This should be run from circleCI and contains a config.yml file under the .circleci directory.
 
-###CircleCI
+## CircleCI ##
 
 To run this you need to sign up to circle CI and start a project with this repo. Please fork the repo as you will need write access to the repo to kick off a build.
 The job will run on every commit to the repo. Currently there is a hardcoded version in the config.yml which should match the application version and will be used to tag the artifacts.
 Past jobs can be rerun at any time to deploy an older version of the code.
 
 
-###Variables
+## Variables ##
 
 There is a file called hosts which has a list of ips to run this playbook against and the user to ssh onto the server as currently this is just the private ip of the vagrant image provided.
 There are 2 command line parameters deploy_version and path_to_war. This allows the deploy script to be run locally as well as on the CI server. 
 If they are not provided the defaults in deploy.yml will be used.
 
 
-###Access Control
+## Access Control ##
 
 The VM provided had a ssh password however using this is not recommended as it is less secure than using ssh keys.
 
@@ -30,13 +30,13 @@ This means users do not need server access to be able to trigger a deployment. O
 The path to the private key of the server to deploy to can be specified on the command line with the parameter --private-key 
 
 
-###Rollback
+## Rollback ##
 
 To deploy a previous version of the application code you need to navigate to the workflow section of CircleCI. 
 From there you can rerun any of the previous deploy jobs to redeploy an older version of the code.
 
 
-###Running it locally
+## Running it locally ##
 
 This deployment can be run locally by users who have the server ssh keys stored locally.
 If this is being run against a vagrant VM the key path can be found be running the "vagrant ssh-config" command.
@@ -48,7 +48,7 @@ Then you can run the ansible command
 ansible-playbook -i hosts deploy.yml --private-key $PLEASE_REPLACE_ME --extra-vars "deploy_version=$PLEASE_REPLACE_ME path_to_war=$PLEASE_REPLACE_ME"
 ```
 
-###Improvements
+## Improvements ##
 
 The focus of this task was on creating a minimum viable solution, therefore there were considerations that were left out, some of which are mentioned below.
 

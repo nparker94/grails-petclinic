@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  become: true
 
   vars:
     path_to_war: target/petclinic.war
@@ -9,40 +10,34 @@
     - name: Updating apt repo
       apt:
         update_cache: yes
-      become: true
 
     - name: Install java8
       apt:
         state: latest
         pkg: openjdk-8-jdk
-      become: true
 
     - name: Install tomcat7
       apt:
         state: latest
         pkg: tomcat7
-      become: true
 
     - name: Move war into tomcat webapps dir
       copy:
         src: "{{ path_to_war }}"
         dest: /var/lib/tomcat7/webapps/petclinic-{{deploy_version}}.war
-      become: true
 
-    - name: Change permissions on tomcat directory to allow db lock creation
+    - name: Change permissions on tomcat directory to allow h2 db lock creation
       file:
         path: /var/lib/tomcat7
         state: directory
         mode: 0755
         group: tomcat7
         owner: tomcat7
-      become: true
 
     - name: Add tomcat server.xml with custom config to run app on port 80 at the root context
       template:
         src: server.xml
         dest: /etc/tomcat7/server.xml
-      become: true
 
     - name: Allow tomcat to bind on port 80
       lineinfile:
@@ -50,7 +45,6 @@
         line: 'AUTHBIND=yes'
         path: /etc/default/tomcat7
         state: present
-      become: true
 
     - name: Restart tomcat
       service: name=tomcat7 state=restarted

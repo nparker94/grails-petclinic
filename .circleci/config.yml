@@ -4,6 +4,8 @@ jobs:
     docker:
       - image: circleci/openjdk:8-jdk
     environment:
+#The idea was to have the version specified once and then referenced throughout the file however I didn't get this to work within the time
+# which is why the version is hardcoded in other places
       - DEPLOY_VERSION: 3.0
     steps:
       - checkout

@@ -10,11 +10,11 @@ jobs:
       #- run: export DEPLOY_VERSION=`git rev-parse --short HEAD` && echo $DEPLOY_VERSION
       - run: ./grailsw war petclinic-$DEPLOY_VERSION.war
       - store_artifacts:
-          path: grails-app/target/petclinic-$DEPLOY_VERSION.war
+          path: grails-app/target/*.war
       - persist_to_workspace:
           root: grails-app/target
           paths:
-            - petclinic-$DEPLOY_VERSION.war
+            - petclinic-*.war
 
   deploy:
     docker:

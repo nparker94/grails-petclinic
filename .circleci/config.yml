@@ -25,8 +25,8 @@ jobs:
       - attach_workspace:
           at: /tmp/target
       - run: sudo pip install ansible
-      - run: ansible-playbook -i hosts ansible/deploy.yml -vv --syntax-check --extra-vars "path_to_war=/tmp/target/petclinic-3.0.war deploy_version=$DEPLOY_VERSION"
-      - run: ansible-playbook -i hosts ansible/deploy.yml --private-key PLEASE_REPLACE_ME --extra-vars "path_to_war=/tmp/target/petclinic-3.0.war deploy_version=$DEPLOY_VERSION"
+      - run: ansible-playbook -i ansible/hosts ansible/deploy.yml -vv --syntax-check --extra-vars "path_to_war=/tmp/target/petclinic-3.0.war deploy_version=$DEPLOY_VERSION"
+      - run: ansible-playbook -i ansible/hosts ansible/deploy.yml -vv --private-key PLEASE_REPLACE_ME --extra-vars "path_to_war=/tmp/target/petclinic-3.0.war deploy_version=$DEPLOY_VERSION"
 
 workflows:
   version: 2

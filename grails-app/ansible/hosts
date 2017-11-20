@@ -1,0 +1,2 @@
+[prod_servers]
+192.168.10.10 ansible_user=vagrant

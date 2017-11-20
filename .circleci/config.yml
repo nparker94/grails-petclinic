@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/openjdk:8-jdk
     environment:
-      - DEPLOY_VERSION: 3
+      - DEPLOY_VERSION: 3.0
     steps:
       - checkout
       #- run: export DEPLOY_VERSION=`git rev-parse --short HEAD` && echo $DEPLOY_VERSION
@@ -14,7 +14,7 @@ jobs:
       - persist_to_workspace:
           root: grails-app/target
           paths:
-            - petclinic-*.war
+            - petclinic-3.0.war
 
   deploy:
     docker:

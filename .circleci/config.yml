@@ -3,9 +3,11 @@ jobs:
   build:
     docker:
       - image: circleci/openjdk:8-jdk
+    environment:
+      - DEPLOY_VERSION: 3
     steps:
       - checkout
-      - run: export DEPLOY_VERSION=`git rev-parse --short HEAD` && echo $DEPLOY_VERSION
+      #- run: export DEPLOY_VERSION=`git rev-parse --short HEAD` && echo $DEPLOY_VERSION
       - run: ./grailsw war petclinic-$DEPLOY_VERSION.war
       - store_artifacts:
           path: grails-app/target/petclinic-$DEPLOY_VERSION.war
@@ -16,10 +18,12 @@ jobs:
 
   deploy:
     docker:
-    - image: circleci/python:2.7
+      - image: circleci/python:2.7
+    environment:
+      - DEPLOY_VERSION: 3
     steps:
       - checkout
-      - run: export DEPLOY_VERSION=`git rev-parse --short HEAD` && echo $DEPLOY_VERSION
+   #   - run: export DEPLOY_VERSION=`git rev-parse --short HEAD` && echo $DEPLOY_VERSION
       - attach_workspace:
           at: /tmp/target
       - run: sudo pip install ansible

@@ -7,12 +7,11 @@ jobs:
       - DEPLOY_VERSION: 3.0
     steps:
       - checkout
-      #- run: export DEPLOY_VERSION=`git rev-parse --short HEAD` && echo $DEPLOY_VERSION
-      - run: ./grailsw war target/petclinic-$DEPLOY_VERSION.war
+      - run: ./grailsw war target/petclinic-3.0.war
       - store_artifacts:
-          path: grails-app/target/petclinic-3.0.war
+          path: target/petclinic-3.0.war
       - persist_to_workspace:
-          root: grails-app/target
+          root: target
           paths:
             - petclinic-3.0.war
 
@@ -20,15 +19,14 @@ jobs:
     docker:
       - image: circleci/python:2.7
     environment:
-      - DEPLOY_VERSION: 3
+      - DEPLOY_VERSION: 3.0
     steps:
       - checkout
-   #   - run: export DEPLOY_VERSION=`git rev-parse --short HEAD` && echo $DEPLOY_VERSION
       - attach_workspace:
           at: /tmp/target
       - run: sudo pip install ansible
-      - run: ansible-playbook -i hosts deploy.yml -vv --syntax-check --extra-vars "path_to_war=petclinic-$DEPLOY_VERSION.war deploy_version=$DEPLOY_VERSION"
-      - run: ansible-playbook -i hosts deploy.yml --private-key PLEASE_REPLACE_ME --extra-vars "path_to_war=petclinic-$DEPLOY_VERSION.war deploy_version=$DEPLOY_VERSION"
+      - run: ansible-playbook -i hosts deploy.yml -vv --syntax-check --extra-vars "path_to_war=/tmp/target/petclinic-3.0.war deploy_version=$DEPLOY_VERSION"
+      - run: ansible-playbook -i hosts deploy.yml --private-key PLEASE_REPLACE_ME --extra-vars "path_to_war=/tmp/target/petclinic-3.0.war deploy_version=$DEPLOY_VERSION"
 
 workflows:
   version: 2
